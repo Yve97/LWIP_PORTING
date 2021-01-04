@@ -44,6 +44,12 @@
 #include "./led/bsp_led.h" 
 #include "./eth/bsp_eth.h" 
 
+/* FreeRTOSÍ·ÎÄ¼þ */
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "semphr.h"
+
 
 
 

@@ -23,8 +23,16 @@ struct ethernetif {
 
 extern ETH_HandleTypeDef heth;
 
-static void arp_timer(void *arg);
+/* USER CODE BEGIN 3 */
+xSemaphoreHandle s_xSemaphore = NULL;
 
+sys_sem_t tx_sem = NULL;
+sys_mbox_t eth_tx_mb = NULL;
+
+
+
+static void arp_timer(void *arg);
+/* USER CODE END 3 */
 
 static void low_level_init(struct netif *netif)
 { 
@@ -60,6 +68,31 @@ static void low_level_init(struct netif *netif)
   #else 
     netif->flags |= NETIF_FLAG_BROADCAST;
   #endif /* LWIP_ARP */
+
+/* USER CODE BEGIN PHY_PRE_CONFIG */ 
+    
+  s_xSemaphore = xSemaphoreCreateCounting(40,0);
+  
+  if(sys_sem_new(&tx_sem , 0) == ERR_OK)
+    PRINT_DEBUG("sys_sem_new ok\n");
+  
+  if(sys_mbox_new(&eth_tx_mb , 50) == ERR_OK)
+    PRINT_DEBUG("sys_mbox_new ok\n");
+
+  /* create the task that handles the ETH_MAC */
+	sys_thread_new("ETHIN",
+                  ethernetif_input,  /* 任务入口函数 */
+                  netif,        	  /* 任务入口函数参数 */
+                  NETIF_IN_TASK_STACK_SIZE,/* 任务栈大小 */
+                  NETIF_IN_TASK_PRIORITY); /* 任务的优先级 */
+                  
+//	sys_thread_new("ETHTX",
+//                  ethernetif_output,  /* 任务入口函数 */
+//                  netif,        	  /* 任务入口函数参数 */
+//                  NETIF_OUT_TASK_STACK_SIZE,/* 任务栈大小 */
+//                  NETIF_OUT_TASK_PRIORITY); /* 任务的优先级 */
+                                 
+/* USER CODE END PHY_PRE_CONFIG */
 
 #endif /* LWIP_ARP || LWIP_ETHERNET */
 
@@ -235,26 +268,36 @@ static struct pbuf * low_level_input(struct netif *netif)
 }
 
 
-void ethernetif_input(struct netif *netif)
+void ethernetif_input(void *pParams)
 {
-  err_t err;
-  struct pbuf *p;
+  struct netif *netif;
+	struct pbuf *p = NULL;
+	netif = (struct netif*) pParams;
+  LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
 
-  /* move received packet into a new pbuf */
-  p = low_level_input(netif);
-    
-  /* no packet could be read, silently ignore this */
-  if (p == NULL) return;
-    
-  /* entry point to the LwIP stack */
-  err = netif->input(p, netif);
-    
-  if (err != ERR_OK)
-  {
-    LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
-    pbuf_free(p);
-    p = NULL;    
-  }
+  while(1) 
+  { //获取信号量来判断是否有数据传入系统
+    if(xSemaphoreTake( s_xSemaphore, portMAX_DELAY ) == pdTRUE)
+    {
+      /* move received packet into a new pbuf */
+      taskENTER_CRITICAL();
+      p = low_level_input(netif);
+      taskEXIT_CRITICAL();
+      /* points to packet payload, which starts with an Ethernet header */
+      if(p != NULL)
+      {
+        taskENTER_CRITICAL();
+        /* full packet send to tcpip_thread to process */
+        if (netif->input(p, netif) != ERR_OK)
+        {
+          LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
+          pbuf_free(p);
+          p = NULL;
+        }
+        taskEXIT_CRITICAL();
+      }
+    }
+	}
 }
 
 

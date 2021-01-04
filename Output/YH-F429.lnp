@@ -76,6 +76,7 @@
 "..\output\lowpan6_common.o"
 "..\output\zepif.o"
 "..\output\ethernetif.o"
+"..\output\sys_arch.o"
 "..\output\cm_backtrace.o"
 "..\output\cmb_fault.o"
 "..\output\croutine.o"
