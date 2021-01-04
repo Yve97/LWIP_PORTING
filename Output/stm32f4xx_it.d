@@ -87,3 +87,12 @@
 ..\output\stm32f4xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\ctype.h
 ..\output\stm32f4xx_it.o: ..\LwIP\include\lwip/opt.h
 ..\output\stm32f4xx_it.o: ..\User\stm32f4xx_it.h
+..\output\stm32f4xx_it.o: ..\FreeRtos\include\FreeRTOS.h
+..\output\stm32f4xx_it.o: ..\User\FreeRTOSConfig.h
+..\output\stm32f4xx_it.o: ..\FreeRtos\include\projdefs.h
+..\output\stm32f4xx_it.o: ..\FreeRtos\include\portable.h
+..\output\stm32f4xx_it.o: ..\FreeRtos\include\deprecated_definitions.h
+..\output\stm32f4xx_it.o: ..\FreeRtos\portable\RVDS\ARM_CM4F\portmacro.h
+..\output\stm32f4xx_it.o: ..\FreeRtos\include\mpu_wrappers.h
+..\output\stm32f4xx_it.o: ..\FreeRtos\include\task.h
+..\output\stm32f4xx_it.o: ..\FreeRtos\include\list.h

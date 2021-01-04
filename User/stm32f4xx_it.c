@@ -42,6 +42,9 @@
 #include "stm32f4xx_it.h"
 #include "./usart/bsp_debug_usart.h"
 
+#include "FreeRTOS.h"					//FreeRTOS使用		  
+#include "task.h" 
+
 
 /** @addtogroup STM32F4xx_HAL_Examples
   * @{
@@ -122,25 +125,25 @@ void UsageFault_Handler(void)
   {
   }
 }
-void SVC_Handler(void)
-{
-  /* USER CODE BEGIN SVCall_IRQn 0 */
+//void SVC_Handler(void)
+//{
+//  /* USER CODE BEGIN SVCall_IRQn 0 */
 
-  /* USER CODE END SVCall_IRQn 0 */
-  /* USER CODE BEGIN SVCall_IRQn 1 */
+//  /* USER CODE END SVCall_IRQn 0 */
+//  /* USER CODE BEGIN SVCall_IRQn 1 */
 
-  /* USER CODE END SVCall_IRQn 1 */
-}
+//  /* USER CODE END SVCall_IRQn 1 */
+//}
 
-void PendSV_Handler(void)
-{
-  /* USER CODE BEGIN PendSV_IRQn 0 */
+//void PendSV_Handler(void)
+//{
+//  /* USER CODE BEGIN PendSV_IRQn 0 */
 
-  /* USER CODE END PendSV_IRQn 0 */
-  /* USER CODE BEGIN PendSV_IRQn 1 */
+//  /* USER CODE END PendSV_IRQn 0 */
+//  /* USER CODE BEGIN PendSV_IRQn 1 */
 
-  /* USER CODE END PendSV_IRQn 1 */
-}
+//  /* USER CODE END PendSV_IRQn 1 */
+//}
 /**
   * @brief  This function handles Debug Monitor exception.
   * @param  None
@@ -157,10 +160,25 @@ u32_t sys_now(void)
   return HAL_GetTick();
 }
 
-
+extern void xPortSysTickHandler(void);
 void SysTick_Handler(void)
 {
+    uint32_t ulReturn;
+  /* 进入临界段，临界段可以嵌套 */
+  ulReturn = taskENTER_CRITICAL_FROM_ISR();
+  
   HAL_IncTick();
+#if (INCLUDE_xTaskGetSchedulerState  == 1 )
+  if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)
+  {
+#endif  /* INCLUDE_xTaskGetSchedulerState */  
+  xPortSysTickHandler();
+#if (INCLUDE_xTaskGetSchedulerState  == 1 )
+  }
+#endif  /* INCLUDE_xTaskGetSchedulerState */
+  
+  /* 退出临界段 */
+  taskEXIT_CRITICAL_FROM_ISR( ulReturn );
 }
 
 /******************************************************************************/
