@@ -5,10 +5,10 @@
 <h2>Tool Versions:</h2>
 IDE-Version: ¦ÌVision V5.29.0.0
 Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: 11 Microsoft, Microsoft, LIC=KRMLQ-NXMFT-BEGHH-W2LHC-6KJDC-3FBJM
+License Information: 11 AutoBVT, Microsoft, LIC=S5ITG-VCEF3-UMN9A-1PZR7-H4EUQ-VZS0T
  
 Tool Versions:
-Toolchain:       MDK-ARM Plus  Version: 5.29.0.0
+Toolchain:       MDK-ARM Professional  Version: 5.29.0.0
 Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.06 update 6 (build 750)
 Assembler:       Armasm.exe V5.06 update 6 (build 750)
@@ -21,76 +21,47 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.7.0
 Dialog DLL:      TCM.DLL V1.36.5.0
  
 <h2>Project:</h2>
-C:\Users\Administrator\Desktop\PORTING\LWIP_PORTING\Project\YH-F429.uvprojx
-Project File Date:  01/04/2021
+C:\Users\Administrator\Desktop\×ÀÃæ\porting\LWIP_PORTING\Project\YH-F429.uvprojx
+Project File Date:  01/05/2021
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'LwIP'
-compiling ethernetif.c...
-..\User\arch\sys_arch.h(46): warning:  #47-D: incompatible redefinition of macro "DEST_IP_ADDR2"  (declared at line 59 of "..\User\main.h")
-  #define DEST_IP_ADDR2                 0
-..\User\arch\sys_arch.h(47): warning:  #47-D: incompatible redefinition of macro "DEST_IP_ADDR3"  (declared at line 60 of "..\User\main.h")
-  #define DEST_IP_ADDR3               181
-..\User\arch\sys_arch.h(49): warning:  #47-D: incompatible redefinition of macro "DEST_PORT"  (declared at line 62 of "..\User\main.h")
-  #define DEST_PORT                  5001
-..\User\arch\sys_arch.h(59): warning:  #47-D: incompatible redefinition of macro "IP_ADDR2"  (declared at line 72 of "..\User\main.h")
-  #define IP_ADDR2                      0
-..\User\arch\sys_arch.h(71): warning:  #47-D: incompatible redefinition of macro "GW_ADDR2"  (declared at line 84 of "..\User\main.h")
-  #define GW_ADDR2                      0
-..\User\arch\ethernetif.c: 5 warnings, 0 errors
 compiling main.c...
-..\User\arch/sys_arch.h(46): warning:  #47-D: incompatible redefinition of macro "DEST_IP_ADDR2"  (declared at line 59 of "..\User\main.h")
-  #define DEST_IP_ADDR2                 0
-..\User\arch/sys_arch.h(47): warning:  #47-D: incompatible redefinition of macro "DEST_IP_ADDR3"  (declared at line 60 of "..\User\main.h")
-  #define DEST_IP_ADDR3               181
-..\User\arch/sys_arch.h(49): warning:  #47-D: incompatible redefinition of macro "DEST_PORT"  (declared at line 62 of "..\User\main.h")
-  #define DEST_PORT                  5001
-..\User\arch/sys_arch.h(59): warning:  #47-D: incompatible redefinition of macro "IP_ADDR2"  (declared at line 72 of "..\User\main.h")
-  #define IP_ADDR2                      0
-..\User\arch/sys_arch.h(71): warning:  #47-D: incompatible redefinition of macro "GW_ADDR2"  (declared at line 84 of "..\User\main.h")
-  #define GW_ADDR2                      0
-..\User\main.c: 5 warnings, 0 errors
+compiling api_lib.c...
+compiling api_msg.c...
+compiling err.c...
+compiling if_api.c...
+compiling sockets.c...
+compiling tcpip.c...
+compiling mem.c...
+compiling init.c...
+compiling memp.c...
+compiling pbuf.c...
+compiling netif.c...
+compiling sys.c...
+compiling bridgeif.c...
+compiling timeouts.c...
+compiling ethernetif.c...
 compiling sys_arch.c...
-..\User\arch/sys_arch.h(46): warning:  #47-D: incompatible redefinition of macro "DEST_IP_ADDR2"  (declared at line 59 of "..\User\main.h")
-  #define DEST_IP_ADDR2                 0
-..\User\arch/sys_arch.h(47): warning:  #47-D: incompatible redefinition of macro "DEST_IP_ADDR3"  (declared at line 60 of "..\User\main.h")
-  #define DEST_IP_ADDR3               181
-..\User\arch/sys_arch.h(49): warning:  #47-D: incompatible redefinition of macro "DEST_PORT"  (declared at line 62 of "..\User\main.h")
-  #define DEST_PORT                  5001
-..\User\arch/sys_arch.h(59): warning:  #47-D: incompatible redefinition of macro "IP_ADDR2"  (declared at line 72 of "..\User\main.h")
-  #define IP_ADDR2                      0
-..\User\arch/sys_arch.h(71): warning:  #47-D: incompatible redefinition of macro "GW_ADDR2"  (declared at line 84 of "..\User\main.h")
-  #define GW_ADDR2                      0
-..\User\arch\sys_arch.c: 5 warnings, 0 errors
 linking...
-..\Output\YH-F429.axf: Error: L6200E: Symbol gnetif multiply defined (by sys_arch.o and main.o).
-..\Output\YH-F429.axf: Error: L6200E: Symbol GATEWAY_ADDRESS multiply defined (by sys_arch.o and main.o).
-..\Output\YH-F429.axf: Error: L6200E: Symbol IP_ADDRESS multiply defined (by sys_arch.o and main.o).
-..\Output\YH-F429.axf: Error: L6200E: Symbol NETMASK_ADDRESS multiply defined (by sys_arch.o and main.o).
-..\Output\YH-F429.axf: Error: L6200E: Symbol ipaddr multiply defined (by sys_arch.o and main.o).
-..\Output\YH-F429.axf: Error: L6200E: Symbol netmask multiply defined (by sys_arch.o and main.o).
-..\Output\YH-F429.axf: Error: L6200E: Symbol gw multiply defined (by sys_arch.o and main.o).
-..\Output\YH-F429.axf: Error: L6200E: Symbol sys_now multiply defined (by sys_arch.o and stm32f4xx_it.o).
-Not enough information to list image symbols.
-Not enough information to list load addresses in the image map.
-Finished: 2 information, 0 warning and 8 error messages.
-"..\Output\YH-F429.axf" - 8 Error(s), 15 Warning(s).
+Program Size: Code=46752 RO-data=3384 RW-data=380 ZI-data=153764  
+FromELF: creating hex file...
+"..\Output\YH-F429.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
 Package Vendor: Keil
-                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.9.0.pack
-                Keil.STM32F4xx_DFP.2.9.0
+                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.14.0.pack
+                Keil.STM32F4xx_DFP.2.14.0
                 STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
 
 <h2>Collection of Component include folders:</h2>
   .\RTE\_LwIP
-  C:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
+  C:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Target not created.
-Build Time Elapsed:  00:00:19
+Build Time Elapsed:  00:01:30
 </pre>
 </body>
 </html>

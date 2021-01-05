@@ -141,4 +141,3 @@
 ..\output\netif.o: ..\User\arch\sys_arch.h
 ..\output\netif.o: ..\LwIP\include\lwip\tcpip.h
 ..\output\netif.o: ..\LwIP\include\netif/ethernet.h
-..\output\netif.o: ..\LwIP\include\lwip/dhcp.h

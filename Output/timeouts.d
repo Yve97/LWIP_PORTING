@@ -137,8 +137,6 @@
 ..\output\timeouts.o: ..\LwIP\include\lwip/prot/ieee.h
 ..\output\timeouts.o: ..\LwIP\include\lwip/prot/etharp.h
 ..\output\timeouts.o: ..\LwIP\include\lwip/dhcp.h
-..\output\timeouts.o: ..\LwIP\include\lwip/udp.h
-..\output\timeouts.o: ..\LwIP\include\lwip/prot/udp.h
 ..\output\timeouts.o: ..\LwIP\include\lwip/autoip.h
 ..\output\timeouts.o: ..\LwIP\include\lwip/igmp.h
 ..\output\timeouts.o: ..\LwIP\include\lwip/dns.h

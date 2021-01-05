@@ -155,10 +155,10 @@ void DebugMon_Handler(void)
 
 
 
-u32_t sys_now(void)
-{
-  return HAL_GetTick();
-}
+//u32_t sys_now(void)
+//{
+//  return HAL_GetTick();
+//}
 
 extern void xPortSysTickHandler(void);
 void SysTick_Handler(void)

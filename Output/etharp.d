@@ -120,11 +120,6 @@
 ..\output\etharp.o: ..\LwIP\include\lwip/prot/etharp.h
 ..\output\etharp.o: ..\LwIP\include\lwip/snmp.h
 ..\output\etharp.o: ..\LwIP\include\lwip/dhcp.h
-..\output\etharp.o: ..\LwIP\include\lwip/udp.h
-..\output\etharp.o: ..\LwIP\include\lwip/ip.h
-..\output\etharp.o: ..\LwIP\include\lwip/ip6.h
-..\output\etharp.o: ..\LwIP\include\lwip/prot/ip.h
-..\output\etharp.o: ..\LwIP\include\lwip/prot/udp.h
 ..\output\etharp.o: ..\LwIP\include\lwip/autoip.h
 ..\output\etharp.o: ..\LwIP\include\lwip/prot/iana.h
 ..\output\etharp.o: ..\LwIP\include\netif/ethernet.h

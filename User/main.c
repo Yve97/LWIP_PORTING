@@ -38,79 +38,97 @@
 #include "delay.h"
 #include "pcf8574.h"
 
-struct netif gnetif;
-ip4_addr_t ipaddr;
-ip4_addr_t netmask;
-ip4_addr_t gw;
-uint8_t IP_ADDRESS[4];
-uint8_t NETMASK_ADDRESS[4];
-uint8_t GATEWAY_ADDRESS[4];
 
-void LwIP_Init(void)
-{
-  /* IP addresses initialization */
-  /* USER CODE BEGIN 0 */
-#ifdef USE_DHCP
-  ip_addr_set_zero_ip4(&ipaddr);
-  ip_addr_set_zero_ip4(&netmask);
-  ip_addr_set_zero_ip4(&gw);
-#else
-  IP4_ADDR(&ipaddr,IP_ADDR0,IP_ADDR1,IP_ADDR2,IP_ADDR3);
-  IP4_ADDR(&netmask,NETMASK_ADDR0,NETMASK_ADDR1,NETMASK_ADDR2,NETMASK_ADDR3);
-  IP4_ADDR(&gw,GW_ADDR0,GW_ADDR1,GW_ADDR2,GW_ADDR3);
-#endif /* USE_DHCP */
-  /* USER CODE END 0 */
-    
-  /* Initilialize the LwIP stack without RTOS */
-  lwip_init();
-  
-  /* add the network interface (IPv4/IPv6) without RTOS */
-  netif_add(&gnetif, &ipaddr, &netmask, &gw, NULL, &ethernetif_init, &ethernet_input);
+/**************************** 任务句柄 ********************************/
+/* 
+ * 任务句柄是一个指针，用于指向一个任务，当任务创建好之后，它就具有了一个任务句柄
+ * 以后我们要想操作这个任务都需要通过这个任务句柄，如果是自身的任务操作自己，那么
+ * 这个句柄可以为NULL。
+ */
+static TaskHandle_t AppTaskCreate_Handle = NULL;/* 创建任务句柄 */
+//static TaskHandle_t Test1_Task_Handle = NULL;/* LED任务句柄 */
+//static TaskHandle_t Test2_Task_Handle = NULL;/* KEY任务句柄 */
 
-  /* Registers the default network interface */
-  netif_set_default(&gnetif);
+/********************************** 内核对象句柄 *********************************/
+/*
+ * 信号量，消息队列，事件标志组，软件定时器这些都属于内核的对象，要想使用这些内核
+ * 对象，必须先创建，创建成功之后会返回一个相应的句柄。实际上就是一个指针，后续我
+ * 们就可以通过这个句柄操作这些内核对象。
+ *
+ * 内核对象说白了就是一种全局的数据结构，通过这些数据结构我们可以实现任务间的通信，
+ * 任务间的事件同步等各种功能。至于这些功能的实现我们是通过调用这些内核对象的函数
+ * 来完成的
+ * 
+ */
 
-  if (netif_is_link_up(&gnetif))
-  {
-    /* When the netif is fully configured this function must be called */
-    netif_set_up(&gnetif);
-  }
-  else
-  {
-    /* When the netif link is down this function must be called */
-    netif_set_down(&gnetif);
-  }
+/******************************* 全局变量声明 ************************************/
+/*
+ * 当我们在写应用程序的时候，可能需要用到一些全局变量。
+ */
 
-/* USER CODE BEGIN 3 */
 
-/* USER CODE END 3 */
-}
+/******************************* 宏定义 ************************************/
+/*
+ * 当我们在写应用程序的时候，可能需要用到一些宏定义。
+ */
 
-uint8_t flag  = 0;
+
+/*
+*************************************************************************
+*                             函数声明
+*************************************************************************
+*/
+static void AppTaskCreate(void);/* 用于创建任务 */
+
+//static void Test1_Task(void* pvParameters);/* Test1_Task任务实现 */
+//static void Test2_Task(void* pvParameters);/* Test2_Task任务实现 */
 
 int main(void)
 {
+	BaseType_t xReturn = pdPASS;/* 定义一个创建信息返回值，默认为pdPASS */
   //板级外设初始化
   BSP_Init();
 	
 	delay_init(180);                //初始化延时函数
   PCF8574_Init();                 //初始化PCF8574
   //LwIP协议栈初始化
-  LwIP_Init();  
   
-  while (1)
-  {
-		if(flag == 1)
-		{
-			flag = 0;
-			//调用网卡接收函数
-			ethernetif_input(&gnetif);
-		}
-    //处理LwIP中定时事件
-    sys_check_timeouts();
-  }
+//  tcpecho_init();
+  
+  /* 创建AppTaskCreate任务 */
+  xReturn = xTaskCreate((TaskFunction_t )AppTaskCreate,  /* 任务入口函数 */
+                        (const char*    )"AppTaskCreate",/* 任务名字 */
+                        (uint16_t       )512,  /* 任务栈大小 */
+                        (void*          )NULL,/* 任务入口函数参数 */
+                        (UBaseType_t    )1, /* 任务的优先级 */
+                        (TaskHandle_t*  )&AppTaskCreate_Handle);/* 任务控制块指针 */ 
+  /* 启动任务调度 */           
+  if(pdPASS == xReturn)
+    vTaskStartScheduler();   /* 启动任务，开启调度 */
+  else
+    return -1;  
+  
+  while(1);   /* 正常不会执行到这里 */  
 }
 
+
+/***********************************************************************
+  * @ 函数名  ： AppTaskCreate
+  * @ 功能说明： 为了方便管理，所有的任务创建函数都放在这个函数里面
+  * @ 参数    ： 无  
+  * @ 返回值  ： 无
+  **********************************************************************/
+static void AppTaskCreate(void)
+{
+  //BaseType_t xReturn = pdPASS;/* 定义一个创建信息返回值，默认为pdPASS */
+  TCPIP_Init();
+
+  taskENTER_CRITICAL();           //进入临界区
+	
+  vTaskDelete(AppTaskCreate_Handle); //删除AppTaskCreate任务，即使这里删除任务，创建了接收和LWIP内核任务也是可以的
+  
+  taskEXIT_CRITICAL();            //退出临界区
+}
 
 
 /********************************END OF FILE****************************/

@@ -123,11 +123,4 @@
 ..\output\sys_arch.o: ..\User\arch\ethernetif.h
 ..\output\sys_arch.o: ..\User\arch\sys_arch.h
 ..\output\sys_arch.o: ..\LwIP\include\lwip/dhcp.h
-..\output\sys_arch.o: ..\LwIP\include\lwip/udp.h
-..\output\sys_arch.o: ..\LwIP\include\lwip/ip.h
-..\output\sys_arch.o: ..\LwIP\include\lwip/ip4.h
-..\output\sys_arch.o: ..\LwIP\include\lwip/prot/ip4.h
-..\output\sys_arch.o: ..\LwIP\include\lwip/ip6.h
-..\output\sys_arch.o: ..\LwIP\include\lwip/prot/ip.h
-..\output\sys_arch.o: ..\LwIP\include\lwip/prot/udp.h
 ..\output\sys_arch.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
