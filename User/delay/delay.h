@@ -3,7 +3,7 @@
 #include <sys.h>	  
 //////////////////////////////////////////////////////////////////////////////////  
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
-//ALIENTEK STM32F429开发板
+//ALIENTEK STM32F7开发板
 //使用SysTick的普通计数模式对延迟进行管理(支持ucosii)
 //包括delay_us,delay_ms
 //正点原子@ALIENTEK
@@ -18,7 +18,7 @@
 ////////////////////////////////////////////////////////////////////////////////// 
 
 void delay_init(u8 SYSCLK);
-void delay_ms(u16 nms);
+void delay_ms(u32 nms);
 void delay_us(u32 nus);
 #endif
 

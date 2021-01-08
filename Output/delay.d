@@ -72,3 +72,14 @@
 ..\output\delay.o: ..\Libraries\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h
 ..\output\delay.o: ..\Libraries\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h
 ..\output\delay.o: ..\Libraries\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_hcd.h
+..\output\delay.o: ..\FreeRtos\include\FreeRTOS.h
+..\output\delay.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+..\output\delay.o: ..\User\FreeRTOSConfig.h
+..\output\delay.o: ..\User\usart\bsp_debug_usart.h
+..\output\delay.o: ..\FreeRtos\include\projdefs.h
+..\output\delay.o: ..\FreeRtos\include\portable.h
+..\output\delay.o: ..\FreeRtos\include\deprecated_definitions.h
+..\output\delay.o: ..\FreeRtos\portable\RVDS\ARM_CM4F\portmacro.h
+..\output\delay.o: ..\FreeRtos\include\mpu_wrappers.h
+..\output\delay.o: ..\FreeRtos\include\task.h
+..\output\delay.o: ..\FreeRtos\include\list.h

@@ -39,6 +39,9 @@
 #include "pcf8574.h"
 
 
+
+//目前存在的问题是，网卡的初始化函数在任务里面，估摸着是不太行的，比较那个时候的任务已经开始调度了
+//看下原子的是放在任务调度前还是任务调度后
 /**************************** 任务句柄 ********************************/
 /* 
  * 任务句柄是一个指针，用于指向一个任务，当任务创建好之后，它就具有了一个任务句柄
@@ -92,6 +95,7 @@ int main(void)
 	delay_init(180);                //初始化延时函数
   PCF8574_Init();                 //初始化PCF8574
   //LwIP协议栈初始化
+	
   
 //  tcpecho_init();
   
@@ -121,8 +125,7 @@ int main(void)
 static void AppTaskCreate(void)
 {
   //BaseType_t xReturn = pdPASS;/* 定义一个创建信息返回值，默认为pdPASS */
-  TCPIP_Init();
-
+	 TCPIP_Init();
   taskENTER_CRITICAL();           //进入临界区
 	
   vTaskDelete(AppTaskCreate_Handle); //删除AppTaskCreate任务，即使这里删除任务，创建了接收和LWIP内核任务也是可以的
