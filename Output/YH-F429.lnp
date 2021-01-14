@@ -32,6 +32,7 @@
 "..\output\myiic.o"
 "..\output\pcf8574.o"
 "..\output\sys.o"
+"..\output\client.o"
 "..\output\api_lib.o"
 "..\output\api_msg.o"
 "..\output\err.o"

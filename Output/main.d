@@ -135,3 +135,4 @@
 ..\output\main.o: ..\User\sys.h
 ..\output\main.o: ..\User\PCF8574\pcf8574.h
 ..\output\main.o: ..\User\IIC\myiic.h
+..\output\main.o: ..\User\client.h

@@ -37,7 +37,7 @@
 #include "lwip/timeouts.h"
 #include "delay.h"
 #include "pcf8574.h"
-
+#include "client.h"
 
 
 //目前存在的问题是，网卡的初始化函数在任务里面，估摸着是不太行的，比较那个时候的任务已经开始调度了
@@ -126,6 +126,9 @@ static void AppTaskCreate(void)
 {
   //BaseType_t xReturn = pdPASS;/* 定义一个创建信息返回值，默认为pdPASS */
 	 TCPIP_Init();
+	
+	client_init();
+	
   taskENTER_CRITICAL();           //进入临界区
 	
   vTaskDelete(AppTaskCreate_Handle); //删除AppTaskCreate任务，即使这里删除任务，创建了接收和LWIP内核任务也是可以的
